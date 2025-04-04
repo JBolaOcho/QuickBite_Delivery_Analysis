@@ -17,13 +17,19 @@ Este proyecto tiene como propósito mejorar la eficiencia operativa y la experie
 
 ## 📦 Estructura del Proyecto
 
-QuickBite_Delivery_Analysis/ │ 
+QuickBite_Delivery_Analysis/ 
 ├── data/ # Datos crudos y procesados 
+
 ├── notebooks/ # Análisis exploratorio, visualizaciones, modelado 
+
 ├── src/ # Scripts reutilizables (preprocesamiento, predicción) 
+
 ├── dashboards/ # Archivos de visualización (Power BI, notebooks) 
+
 ├── reports/ # Presentaciones, resúmenes ejecutivos 
+
 ├── models/ # Modelos entrenados guardados 
+
 ├── docs/ # README, requerimientos, documentación técnica
 
 ---
@@ -48,7 +54,7 @@ QuickBite_Delivery_Analysis/ │
 
 - Python (pandas, numpy, matplotlib, seaborn, scikit-learn)
 - Jupyter Notebooks
-- Power BI / Tableau (para dashboards)
+- Power BI (dashboards)
 - Git & GitHub
 
 ---
