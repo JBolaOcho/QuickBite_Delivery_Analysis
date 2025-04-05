@@ -18,6 +18,7 @@ Este proyecto tiene como propósito mejorar la eficiencia operativa y la experie
 ## 📦 Estructura del Proyecto
 
 QuickBite_Delivery_Analysis/ 
+
 ├── data/ # Datos crudos y procesados 
 
 ├── notebooks/ # Análisis exploratorio, visualizaciones, modelado 
