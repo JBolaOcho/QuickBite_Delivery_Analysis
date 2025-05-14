@@ -7,10 +7,17 @@ Este proyecto tiene como objetivo predecir el tiempo de entrega de pedidos a dom
 ## Estructura del Proyecto
 
 ├── data/ # Contiene los datos crudos y limpios (CSV)
+
 ├── notebooks/ # Notebooks Jupyter para EDA y modelado
+
 │ ├── 01_EDA.ipynb
+
 │ └── 02_Modelado_Predictivo.ipynb
+
+└── LICENSE.txt # Licensia del proyecto
+
 └── README.md # Documentación del proyecto
+
 
 ---
 
@@ -18,15 +25,15 @@ Este proyecto tiene como objetivo predecir el tiempo de entrega de pedidos a dom
 
 Se realizó una exploración detallada del dataset que incluye:
 
-- ✅ Limpieza de datos: imputación de valores nulos por media (numéricos) y moda (categóricos).
-- ✅ Análisis de distribución y simetría.
-- ✅ Visualizaciones: histogramas, boxplots, mapas de calor de correlación.
-- ✅ Agrupaciones y orden por promedio de tiempo de entrega para variables categóricas:
+- Limpieza de datos: imputación de valores nulos por media (numéricos) y moda (categóricos).
+- Análisis de distribución y simetría.
+- Visualizaciones: histogramas, boxplots, mapas de calor de correlación.
+- Agrupaciones y orden por promedio de tiempo de entrega para variables categóricas:
   - **Weather:** “Clear” tiene menor tiempo de entrega, “Snowy” el mayor.
   - **Traffic_Level:** “Low” es el más rápido, “High” el más lento.
   - **Time_of_Day:** “Night” tiene mejores tiempos de entrega.
   - **Vehicle_Type:** diferencia leve entre scooter, bicicleta y auto.
-- ✅ Gráficos por segmento para estudiar combinaciones de variables (por ejemplo, vehículo según clima).
+- Gráficos por segmento para estudiar combinaciones de variables (por ejemplo, vehículo según clima).
 
 ---
 
@@ -62,7 +69,7 @@ A través de la importancia de las variables (gráfico de `feature_importance_` 
 
 El modelo final permite realizar predicciones con un diccionario de entrada como este:
 
-```python
+python
 entrada_ejemplo = {
     "Distance_km": 4.5,
     "Preparation_Time_min": 12,
