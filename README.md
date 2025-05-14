@@ -1,88 +1,106 @@
-# QuickBite_Delivery_Analysis# QuickBite Delivery Analysis 🛵📊
+# Food Delivery Time Prediction
 
-Análisis integral de datos y modelado predictivo para optimizar el servicio de entregas de comida a domicilio de **QuickBite Delivery**.
-
----
-
-## 🧠 Objetivo del Proyecto
-
-Este proyecto tiene como propósito mejorar la eficiencia operativa y la experiencia del cliente en QuickBite Delivery, combinando técnicas de **Business Intelligence (BI)** y **Machine Learning (ML)** para:
-
-- Analizar patrones en los tiempos de entrega considerando variables como tráfico, clima y tipo de vehículo.
-- Predecir con mayor precisión el tiempo de entrega esperado para cada pedido.
-- Visualizar métricas clave del servicio en dashboards interactivos.
-- Proponer mejoras en la gestión logística y la asignación de recursos.
+Este proyecto tiene como objetivo predecir el tiempo de entrega de pedidos a domicilio en minutos, utilizando técnicas de análisis exploratorio de datos (EDA) y modelos de machine learning. 
 
 ---
 
-## 📦 Estructura del Proyecto
+## Estructura del Proyecto
 
-QuickBite_Delivery_Analysis/ 
-
-├── data/ # Datos crudos y procesados 
-
-├── notebooks/ # Análisis exploratorio, visualizaciones, modelado 
-
-├── src/ # Scripts reutilizables (preprocesamiento, predicción) 
-
-├── dashboards/ # Archivos de visualización (Power BI, notebooks) 
-
-├── reports/ # Presentaciones, resúmenes ejecutivos 
-
-├── models/ # Modelos entrenados guardados 
-
-├── docs/ # README, requerimientos, documentación técnica
+├── data/ # Contiene los datos crudos y limpios (CSV)
+├── notebooks/ # Notebooks Jupyter para EDA y modelado
+│ ├── 01_EDA.ipynb
+│ └── 02_Modelado_Predictivo.ipynb
+└── README.md # Documentación del proyecto
 
 ---
 
-## 🧾 Variables del Dataset
+## 1. Análisis Exploratorio (EDA)
 
-| Variable                | Tipo   | Descripción |
-|-------------------------|--------|-------------|
-| `Order_ID`              | str    | Identificador único del pedido |
-| `Distance_km`           | int    | Distancia en kilómetros entre restaurante y cliente |
-| `Weather`               | str    | Condiciones climáticas (Clear, Rainy, Snowy, etc.) |
-| `Traffic_Level`         | str    | Nivel de tráfico (Low, Medium, High) |
-| `Time_of_Day`           | str    | Momento del día (Morning, Afternoon, Evening, Night) |
-| `Vehicle_Type`          | str    | Medio de transporte (Bike, Scooter, Car) |
-| `Preparation_Time_min`  | int    | Tiempo de preparación del pedido (min) |
-| `Courier_Experience_yrs`| int    | Años de experiencia del repartidor |
-| `Delivery_Time_min`     | int    | Tiempo total de entrega (min) - **variable objetivo** |
+Se realizó una exploración detallada del dataset que incluye:
 
----
-
-## 🔧 Herramientas Utilizadas
-
-- Python (pandas, numpy, matplotlib, seaborn, scikit-learn)
-- Jupyter Notebooks
-- Power BI (dashboards)
-- Git & GitHub
+- ✅ Limpieza de datos: imputación de valores nulos por media (numéricos) y moda (categóricos).
+- ✅ Análisis de distribución y simetría.
+- ✅ Visualizaciones: histogramas, boxplots, mapas de calor de correlación.
+- ✅ Agrupaciones y orden por promedio de tiempo de entrega para variables categóricas:
+  - **Weather:** “Clear” tiene menor tiempo de entrega, “Snowy” el mayor.
+  - **Traffic_Level:** “Low” es el más rápido, “High” el más lento.
+  - **Time_of_Day:** “Night” tiene mejores tiempos de entrega.
+  - **Vehicle_Type:** diferencia leve entre scooter, bicicleta y auto.
+- ✅ Gráficos por segmento para estudiar combinaciones de variables (por ejemplo, vehículo según clima).
 
 ---
 
-## 📈 Resultados Esperados
+## 2. Modelado Predictivo
 
-- Predicción precisa del tiempo de entrega.
-- Paneles BI interactivos para visualizar el rendimiento de la operación.
-- Recomendaciones de mejora basadas en datos.
+Se implementaron dos modelos supervisados de regresión para predecir la variable `Delivery_Time_min`:
 
----
+### 🔹 Regresión Lineal
+- **MAE:** 5.89 min
+- **RMSE:** 8.83 min
+- **R²:** 0.82
 
-## 🚀 En Desarrollo
+### 🔹 Random Forest Regressor
+- **MAE:** 7.09 min
+- **RMSE:** 10.29 min
+- **R²:** 0.76
 
-Este proyecto se encuentra en curso. Próximamente se incluirán:
-- Scripts funcionales para preprocesamiento y predicción.
-- Dashboards finales.
-- Documentación técnica completa.
-
----
-
-## 🧑‍💻 Autor
-
-Desarrollado por José Luis Bolaños Herrera (JBolaOcho). Proyecto personal para demostrar habilidades en análisis de datos, BI y machine learning.
+> La **regresión lineal** mostró un mejor desempeño general, siendo seleccionada como modelo final.
 
 ---
 
-## 📄 Licencia
+## 3. Variables Importantes
 
-MIT License. Consulta el archivo LICENSE para más detalles.
+A través de la importancia de las variables (gráfico de `feature_importance_` en Random Forest), se identificó:
+
+- `Distance_km` como la variable más influyente (>70% de importancia)
+- Seguido por `Preparation_Time_min` (~15%)
+- El resto de variables tienen un peso bajo (<5%)
+
+---
+
+## 4. Predicción Individual
+
+El modelo final permite realizar predicciones con un diccionario de entrada como este:
+
+```python
+entrada_ejemplo = {
+    "Distance_km": 4.5,
+    "Preparation_Time_min": 12,
+    "Courier_Experience_yrs": 3,
+    "Weather": "Clear",           # Clear, Rainy, Foggy, Windy, Snowy
+    "Traffic_Level": "Medium",    # Low, Medium, High
+    "Time_of_Day": "Afternoon",   # Morning, Afternoon, Evening, Night
+    "Vehicle_Type": "Scooter"     # Scooter, Bike, Car
+}
+
+---
+
+## 5. Comparación de Modelos
+Se realizaron gráficos comparativos de errores (MAE, RMSE, R²) entre regresión lineal y Random Forest, permitiendo visualizar claramente el mejor desempeño de la regresión lineal en este caso.
+
+---
+
+ Conclusiones
+El proyecto identificó patrones importantes como el impacto del clima, tráfico y experiencia del repartidor.
+
+La distancia al cliente es el principal factor que determina el tiempo de entrega.
+
+Un modelo de regresión lineal simple, pero bien preparado, puede ofrecer resultados altamente precisos y comprensibles.
+
+La solución es fácilmente integrable en sistemas logísticos o plataformas de seguimiento.
+
+---
+
+ Herramientas utilizadas
+Python, pandas, matplotlib, seaborn, scikit-learn
+
+Jupyter Notebook
+
+Dataset de Kaggle: https://www.kaggle.com/datasets/denkuznetz/food-delivery-time-prediction/data
+
+Archivo: requirements.txt
+
+---
+
+Autor
+José Luis Bolaños Herrera.
